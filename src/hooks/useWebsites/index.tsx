@@ -49,7 +49,7 @@ const useWebsite = () => {
     }, [websiteList]);
 
     useEffect(() => {
-        const checkStatus = async (index: number) => {
+        const checkStatus = async (_index: number) => {
            /*  try {
                 const response = await fetch(websiteList[index].address, { method: "GET" });
                 if (response.ok) {
