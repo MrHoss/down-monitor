@@ -49,8 +49,8 @@ const useWebsite = () => {
     }, [websiteList]);
 
     useEffect(() => {
-        const checkStatus = async (index: number) => {
-            try {
+        const checkStatus = async (_index: number) => {
+            /* try {
                 const address = websiteList[index].address;
                 const currentURL = window.location.origin; // Pega a origem da URL atual
                 const response = await fetch(`${currentURL}/ping`, { // Usa a origem da URL atual
@@ -70,7 +70,7 @@ const useWebsite = () => {
             } catch (error) {
                 console.error("Error occurred while fetching website:", error);
                 dispatch({ type: "UPDATE_STATUS", payload: { index, status: "offline" } });
-            }
+            } */
         };
 
         
