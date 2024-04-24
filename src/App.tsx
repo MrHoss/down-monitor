@@ -19,6 +19,13 @@ const App = (): JSX.Element => {
     setFormData({ name: "", address: "" });
   };
 
+  if (window.__TAURI__) {
+    
+    
+  } else {
+    
+  }
+
   return (
     <div className="container">
       <h1>Down Monitor</h1>

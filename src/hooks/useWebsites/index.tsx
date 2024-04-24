@@ -49,10 +49,20 @@ const useWebsite = () => {
     }, [websiteList]);
 
     useEffect(() => {
-        const checkStatus = async (_index: number) => {
-           /*  try {
-                const response = await fetch(websiteList[index].address, { method: "GET" });
-                if (response.ok) {
+        const checkStatus = async (index: number) => {
+            try {
+                const address = websiteList[index].address;
+                const currentURL = window.location.origin; // Pega a origem da URL atual
+                const response = await fetch(`${currentURL}/ping`, { // Usa a origem da URL atual
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ address })
+                });
+                const isAlive = await response.json();
+                if (isAlive) {
+                    console.log("Ping response:", isAlive);
                     dispatch({ type: "UPDATE_STATUS", payload: { index, status: "online" } });
                 } else {
                     dispatch({ type: "UPDATE_STATUS", payload: { index, status: "offline" } });
@@ -60,14 +70,16 @@ const useWebsite = () => {
             } catch (error) {
                 console.error("Error occurred while fetching website:", error);
                 dispatch({ type: "UPDATE_STATUS", payload: { index, status: "offline" } });
-            } */
-            setTime(new Date());
+            }
         };
 
+        
+        
         const intervalId = setInterval(() => {
             websiteList.forEach((_, index) => {
                 checkStatus(index);
             });
+            setTime(new Date());
         }, 1000);
 
         return () => clearInterval(intervalId);
