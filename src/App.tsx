@@ -19,18 +19,12 @@ const App = (): JSX.Element => {
     setFormData({ name: "", address: "" });
   };
 
-  if (window.__TAURI__) {
-    
-    
-  } else {
-    
-  }
-
   return (
     <div className="container">
       <h1>Down Monitor</h1>
       <p>{time.toLocaleString()}</p>
       <p>Add your website address</p>
+      <p>{!window.__TAURI__ && "Please note that website status checking may not work properly when accessing the app via a browser due to Cross-Origin Resource Sharing (CORS) restrictions. For accurate results, consider using the app in a native environment."}</p>
       <form
         className="row"
         onSubmit={(e) => {

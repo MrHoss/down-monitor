@@ -1,3 +1,5 @@
+import { tauri } from "@tauri-apps/api";
+import { fetch as tauriFetch } from "@tauri-apps/api/http";
 import { useEffect, useReducer, useState } from "react";
 
 interface WebSiteData {
@@ -49,32 +51,37 @@ const useWebsite = () => {
     }, [websiteList]);
 
     useEffect(() => {
-        const checkStatus = async (_index: number) => {
-            /* try {
-                const address = websiteList[index].address;
-                const currentURL = window.location.origin; // Pega a origem da URL atual
-                const response = await fetch(`${currentURL}/ping`, { // Usa a origem da URL atual
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ address })
-                });
-                const isAlive = await response.json();
-                if (isAlive) {
-                    console.log("Ping response:", isAlive);
+        const checkStatus = async (index: number) => {
+            const address = websiteList[index].address;
+            try {
+
+                const response = window.__TAURI__ ?
+                    await tauriFetch(address, { // Usa a origem da URL atual
+                        method: "HEAD"
+                    }) :
+                    await fetch(address, { // Usa a origem da URL atual
+                        mode: "no-cors",
+                        method: "HEAD"
+                    });
+                if (response.ok) {
                     dispatch({ type: "UPDATE_STATUS", payload: { index, status: "online" } });
+                } else if (response.status === 0) {
+                    dispatch({ type: "UPDATE_STATUS", payload: { index, status: "cors_error" } });
+                } else if (response.status === 301) {
+                    dispatch({ type: "UPDATE_STATUS", payload: { index, status: "moved" } });
                 } else {
                     dispatch({ type: "UPDATE_STATUS", payload: { index, status: "offline" } });
                 }
             } catch (error) {
-                console.error("Error occurred while fetching website:", error);
                 dispatch({ type: "UPDATE_STATUS", payload: { index, status: "offline" } });
-            } */
+
+            }
+
         };
 
-        
-        
+
+
+
         const intervalId = setInterval(() => {
             websiteList.forEach((_, index) => {
                 checkStatus(index);
