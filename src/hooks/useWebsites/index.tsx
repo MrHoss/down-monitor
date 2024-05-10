@@ -1,4 +1,3 @@
-import { tauri } from "@tauri-apps/api";
 import { fetch as tauriFetch } from "@tauri-apps/api/http";
 import { useEffect, useReducer, useState } from "react";
 
