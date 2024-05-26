@@ -21,8 +21,8 @@ Before starting, make sure you have the following software installed:
 
 - [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/)
-- [Rust](https://www.rust-lang.org/)
-
+- [rustup](https://www.rust-lang.org/)
+  
 ### Setup and Execution
 
 1. **Clone the repository**
